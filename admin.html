@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理画面 | Asu Photo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Dela+Gothic+One&family=EB+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Great+Vibes&family=Hina+Mincho&family=Josefin+Sans:ital,wght@0,300;0,400;0,600;1,300&family=Kaisei+Decol:wght@400;500;700&family=Klee+One:wght@400;600&family=Kosugi+Maru&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=M+PLUS+1p:wght@400;500;700&family=M+PLUS+Rounded+1c:wght@400;500;700&family=Montserrat:ital,wght@0,300;0,400;0,600;1,300&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Raleway:ital,wght@0,300;0,400;0,600;1,300&family=Reggae+One&family=Sawarabi+Gothic&family=Sawarabi+Mincho&family=Shippori+Mincho:wght@400;500;700&family=Yomogi&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Maru+Gothic:wght@400;500;700&family=Zen+Old+Mincho:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="common.js"></script>
+  <script>applyFonts(); applyColors();</script>
+
+</head>
+<body>
+
+<!-- ===== LOGIN ===== -->
+<div class="admin-login-wrap" id="loginWrap">
+  <div class="login-card">
+    <h1>Asu Photo</h1>
+    <p class="login-sub">ADMIN</p>
+    <input type="password" id="pwInput" placeholder="パスワード" autocomplete="current-password">
+    <p class="login-error" id="loginError"></p>
+    <button class="btn-login" id="loginBtn">ログイン</button>
+  </div>
+</div>
+
+<!-- ===== ADMIN HEADER ===== -->
+<div class="admin-header" id="adminHeader" style="display:none">
+  <h1>Asu Photo — 管理画面</h1>
+  <button class="sidebar-toggle" id="sidebarToggle">☰ メニュー</button>
+  <div style="display:flex;align-items:center;gap:10px;margin-left:auto;">
+    <button type="button" onclick="testGASConnection()" class="btn-preview-site">📡 GAS接続テスト</button>
+    <button type="button" onclick="window.open('./index.html','_blank')" class="btn-preview-site">👁 サイトを確認する</button>
+    <button class="btn-logout" id="logoutBtn">ログアウト</button>
+  </div>
+</div>
+
+<!-- ===== ADMIN LAYOUT ===== -->
+<div class="admin-layout" id="adminLayout" style="display:none">
+
+  <!-- Sidebar -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="sidebar-logo">Asu Photo</div>
+    <nav>
+      <button type="button" onclick="window.open('./index.html','_blank')" class="sidebar-nav-item" style="cursor:pointer;">🏠 サイトを確認する</button>
+      <div style="height:1px;background:#edf0f3;margin:6px 0;"></div>
+      <button class="sidebar-nav-item" data-target="section-color">🎨 カラーテーマ</button>
+      <button class="sidebar-nav-item" data-target="section-font">📝 書体設定</button>
+      <button class="sidebar-nav-item" data-target="section-catch">✏️ キャッチコピー</button>
+      <button class="sidebar-nav-item" data-target="section-images">🖼️ ヒーロー写真</button>
+      <button class="sidebar-nav-item" data-target="section-planimgs">🖼️ プランカード写真</button>
+      <button class="sidebar-nav-item" data-target="section-gallery">🖼️ ギャラリー画像</button>
+      <button class="sidebar-nav-item" data-target="section-profile">👤 プロフィール</button>
+      <button class="sidebar-nav-item" data-target="section-plans">📋 撮影メニュー・料金</button>
+      <button class="sidebar-nav-item" data-target="section-reviews">⭐ お客様の声</button>
+      <button class="sidebar-nav-item" data-target="section-faq">❓ よくある質問</button>
+      <button class="sidebar-nav-item" data-target="section-line">🔗 LINE設定</button>
+      <button class="sidebar-nav-item" data-target="section-fade">✨ フェード設定</button>
+      <button class="sidebar-nav-item" data-target="section-imgadjust">📐 画像調整</button>
+    </nav>
+  </aside>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Main content -->
+  <div class="admin-main">
+  <div class="admin-main-inner">
+  <div class="admin-wrap active" id="adminWrap">
+
+  <!-- カラーテーマ設定 -->
+  <div class="admin-section-card" id="section-color">
+    <h2>カラーテーマ設定</h2>
+    <div class="form-group">
+      <label class="form-label">プリセットテーマ</label>
+      <div class="theme-presets" id="themePresets">
+        <button type="button" class="theme-preset-btn" onclick="applyPresetById('bluegray',this)">🩵 ブルーグレー</button>
+        <button type="button" class="theme-preset-btn" onclick="applyPresetById('beige',this)">🌿 ナチュラルベージュ</button>
+        <button type="button" class="theme-preset-btn" onclick="applyPresetById('white',this)">🤍 ホワイト</button>
+        <button type="button" class="theme-preset-btn" onclick="applyPresetById('dark',this)">🌙 ダークモード</button>
+        <button type="button" class="theme-preset-btn" onclick="applyPresetById('sakura',this)">🌸 さくらピンク</button>
+      </div>
+    </div>
+    <div class="color-picker-grid">
+      <div class="color-picker-item">
+        <label class="form-label">背景色</label>
+        <div class="color-input-wrap">
+          <input type="color" id="colorBg" class="color-swatch">
+          <input type="text"  id="colorBgHex" class="form-input color-hex" maxlength="7">
+        </div>
+      </div>
+      <div class="color-picker-item">
+        <label class="form-label">サーフェス色（カード背景）</label>
+        <div class="color-input-wrap">
+          <input type="color" id="colorSurface" class="color-swatch">
+          <input type="text"  id="colorSurfaceHex" class="form-input color-hex" maxlength="7">
+        </div>
+      </div>
+      <div class="color-picker-item">
+        <label class="form-label">テキスト色</label>
+        <div class="color-input-wrap">
+          <input type="color" id="colorText" class="color-swatch">
+          <input type="text"  id="colorTextHex" class="form-input color-hex" maxlength="7">
+        </div>
+      </div>
+      <div class="color-picker-item">
+        <label class="form-label">サブテキスト色</label>
+        <div class="color-input-wrap">
+          <input type="color" id="colorTextLight" class="color-swatch">
+          <input type="text"  id="colorTextLightHex" class="form-input color-hex" maxlength="7">
+        </div>
+      </div>
+      <div class="color-picker-item">
+        <label class="form-label">アクセントカラー</label>
+        <div class="color-input-wrap">
+          <input type="color" id="colorAccent" class="color-swatch">
+          <input type="text"  id="colorAccentHex" class="form-input color-hex" maxlength="7">
+        </div>
+      </div>
+      <div class="color-picker-item">
+        <label class="form-label">ヘッダー背景色</label>
+        <div class="color-input-wrap">
+          <input type="color" id="colorHeaderBg" class="color-swatch">
+          <input type="text"  id="colorHeaderBgHex" class="form-input color-hex" maxlength="7">
+        </div>
+      </div>
+      <div class="color-picker-item">
+        <label class="form-label">セクションタイトル色</label>
+        <div class="color-input-wrap">
+          <input type="color" id="colorTitle" class="color-swatch">
+          <input type="text"  id="colorTitleHex" class="form-input color-hex" maxlength="7">
+        </div>
+      </div>
+    </div>
+    <div class="color-preview-bar" id="colorPreviewBar">
+      <span class="cpb-bg">背景</span>
+      <span class="cpb-surface">カード</span>
+      <span class="cpb-text">テキスト</span>
+      <span class="cpb-accent">アクセント</span>
+      <span class="cpb-title">タイトル</span>
+    </div>
+    <button class="btn-section-save" onclick="saveSection('color', this)">✓ カラーテーマを保存</button>
+  </div>
+
+  <!-- 書体設定 -->
+  <div class="admin-section-card" id="section-font">
+    <h2>書体設定</h2>
+    <div class="form-group">
+      <label class="form-label">本文フォント（全体）</label>
+      <select class="font-select" id="fontBody" onchange="onFontChange('fontBody','prevBody','--font-body',this.value)">
+        <option value="'Noto Sans JP', sans-serif"        style="font-family:'Noto Sans JP',sans-serif">Noto Sans JP — 読みやすいゴシック</option>
+        <option value="'Noto Serif JP', serif"            style="font-family:'Noto Serif JP',serif">Noto Serif JP — 上品な明朝体</option>
+        <option value="'M PLUS Rounded 1c', sans-serif"   style="font-family:'M PLUS Rounded 1c',sans-serif">M PLUS Rounded 1c — 丸ゴシック・やわらかい</option>
+        <option value="'M PLUS 1p', sans-serif"           style="font-family:'M PLUS 1p',sans-serif">M PLUS 1p — スタンダードゴシック</option>
+        <option value="'Kosugi Maru', sans-serif"         style="font-family:'Kosugi Maru',sans-serif">Kosugi Maru — ポップな丸ゴシック</option>
+        <option value="'Sawarabi Gothic', sans-serif"     style="font-family:'Sawarabi Gothic',sans-serif">Sawarabi Gothic — さわらびゴシック</option>
+        <option value="'Sawarabi Mincho', serif"          style="font-family:'Sawarabi Mincho',serif">Sawarabi Mincho — さわらび明朝</option>
+        <option value="'Zen Kaku Gothic New', sans-serif" style="font-family:'Zen Kaku Gothic New',sans-serif">Zen Kaku Gothic New — 禅角ゴシック</option>
+        <option value="'Shippori Mincho', serif"          style="font-family:'Shippori Mincho',serif">Shippori Mincho — しっぽり明朝・和風</option>
+        <option value="'BIZ UDPGothic', sans-serif"       style="font-family:'BIZ UDPGothic',sans-serif">BIZ UDPGothic — ビジネス向けゴシック</option>
+      </select>
+      <p class="font-preview-text" id="prevBody">あのイーハトーヴォのすきとおった風　家族の笑顔を残す出張カメラマン</p>
+    </div>
+    <div class="form-group">
+      <label class="form-label">セクションタイトルフォント（英字）</label>
+      <select class="font-select" id="fontDisplay" onchange="onFontChange('fontDisplay','prevDisplay','--font-display',this.value)">
+        <option value="'Cormorant Garamond', serif"  style="font-family:'Cormorant Garamond',serif;font-style:italic">Cormorant Garamond — エレガントなセリフ</option>
+        <option value="'Playfair Display', serif"    style="font-family:'Playfair Display',serif;font-style:italic">Playfair Display — 上品なセリフ</option>
+        <option value="'Libre Baskerville', serif"   style="font-family:'Libre Baskerville',serif;font-style:italic">Libre Baskerville — クラシックなセリフ</option>
+        <option value="'Lora', serif"                style="font-family:'Lora',serif;font-style:italic">Lora — やわらかいセリフ</option>
+        <option value="'Josefin Sans', sans-serif"   style="font-family:'Josefin Sans',sans-serif">Josefin Sans — スタイリッシュなサンセリフ</option>
+        <option value="'Raleway', sans-serif"        style="font-family:'Raleway',sans-serif">Raleway — 細くおしゃれなサンセリフ</option>
+        <option value="'Montserrat', sans-serif"     style="font-family:'Montserrat',sans-serif">Montserrat — モダンなサンセリフ</option>
+        <option value="'EB Garamond', serif"         style="font-family:'EB Garamond',serif;font-style:italic">EB Garamond — クラシックガラモン</option>
+        <option value="'Cinzel', serif"              style="font-family:'Cinzel',serif">Cinzel — ローマ字風・格調高い</option>
+        <option value="'Great Vibes', cursive"       style="font-family:'Great Vibes',cursive">Great Vibes — エレガントな筆記体</option>
+      </select>
+      <p class="font-preview-text" id="prevDisplay" style="font-size:26px;font-style:italic;letter-spacing:2px;">Plan / Gallery / Profile</p>
+    </div>
+    <div class="form-group">
+      <label class="form-label">キャッチコピーフォント</label>
+      <select class="font-select" id="fontCatch" onchange="onFontChange('fontCatch','prevCatch','--font-catch',this.value)">
+        <option value="'Noto Serif JP', serif"       style="font-family:'Noto Serif JP',serif">Noto Serif JP — 上品な明朝体</option>
+        <option value="'Shippori Mincho', serif"     style="font-family:'Shippori Mincho',serif">Shippori Mincho — しっぽり明朝</option>
+        <option value="'Zen Old Mincho', serif"      style="font-family:'Zen Old Mincho',serif">Zen Old Mincho — 禅旧明朝</option>
+        <option value="'Hina Mincho', serif"         style="font-family:'Hina Mincho',serif">Hina Mincho — ひな明朝・繊細</option>
+        <option value="'Kaisei Decol', serif"        style="font-family:'Kaisei Decol',serif">Kaisei Decol — カイセイデコール</option>
+        <option value="'Yomogi', cursive"            style="font-family:'Yomogi',cursive">Yomogi — よもぎ・手書き風</option>
+        <option value="'Reggae One', cursive"        style="font-family:'Reggae One',cursive">Reggae One — レゲエOne・インパクト</option>
+        <option value="'Dela Gothic One', cursive"   style="font-family:'Dela Gothic One',cursive">Dela Gothic One — デラゴシック・太い</option>
+        <option value="'Zen Maru Gothic', sans-serif"style="font-family:'Zen Maru Gothic',sans-serif">Zen Maru Gothic — 禅丸ゴシック</option>
+        <option value="'Klee One', cursive"          style="font-family:'Klee One',cursive">Klee One — クレーOne・手書き風</option>
+      </select>
+      <p class="font-preview-text" id="prevCatch" style="font-size:18px;letter-spacing:3px;">特別な日だけじゃない　いつもの幸せを</p>
+    </div>
+    <button class="btn-section-save" onclick="saveSection('font', this)">✓ 書体設定を保存</button>
+  </div>
+
+  <!-- テキスト -->
+  <div class="admin-section-card" id="section-catch">
+    <h2>キャッチコピー・説明文</h2>
+    <div class="form-group">
+      <label class="form-label">キャッチコピー</label>
+      <input class="form-input" id="catchcopy" type="text" placeholder="特別な日だけじゃない いつもの幸せを">
+    </div>
+    <div class="form-group">
+      <label class="form-label">サブコピー</label>
+      <input class="form-input" id="subcopy" type="text" placeholder="笑顔も、泣き顔も未来で愛おしくなる瞬間を写します">
+    </div>
+    <button class="btn-section-save" onclick="saveSection('catch', this)">✓ テキストを保存</button>
+  </div>
+
+  <!-- ヒーロー写真 -->
+  <div class="admin-section-card" id="section-images">
+    <h2>ヒーロー写真（4枚・縦長 3:4）</h2>
+    <div id="heroImgGroup"></div>
+  </div>
+
+  <!-- プランカード写真 -->
+  <div class="admin-section-card" id="section-planimgs">
+    <h2>プランカード写真（縦長 3:4）</h2>
+    <div id="planImgGroup"></div>
+  </div>
+
+  <!-- ギャラリープレビュー -->
+  <div class="admin-section-card" id="section-gallery">
+    <h2>ギャラリープレビュー写真（トップページ用・横長 4:3）</h2>
+    <div id="galleryIdxGroup"></div>
+  </div>
+
+  <div class="admin-section-card">
+    <h2>ギャラリーページ写真（正方形グリッド）</h2>
+    <div class="gallery-upload-grid" id="galleryGrid"></div>
+    <input type="file" id="galleryFileInput" accept="image/jpeg,image/png,image/webp" multiple>
+    <div style="margin-top:10px">
+      <label class="btn-upload-label" for="galleryFileInput">＋ 写真を追加</label>
+      <span style="font-size:11px;color:var(--text-light);margin-left:10px">JPG・PNG・WebP対応</span>
+    </div>
+  </div>
+
+  <!-- プロフィール -->
+  <div class="admin-section-card" id="section-profile">
+    <h2>プロフィール</h2>
+    <div class="img-upload-row">
+      <div class="img-preview-wrap">
+        <img class="img-preview" id="profileImgPrev"
+          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=267&fit=crop&q=75"
+          alt="プロフィール写真">
+      </div>
+      <div class="img-upload-side">
+        <span class="img-upload-name">プロフィール写真</span>
+        <label class="btn-upload-label" for="profileFile">ファイルを選択</label>
+        <input type="file" id="profileFile" accept="image/jpeg,image/png,image/webp">
+      </div>
+    </div>
+    <div class="form-group" style="margin-top:12px">
+      <label class="form-label">プロフィール文</label>
+      <textarea class="form-textarea" id="profileText" rows="5"
+        placeholder="自己紹介文を入力してください"></textarea>
+    </div>
+    <button class="btn-section-save" onclick="saveSection('profile', this)">✓ プロフィールを保存</button>
+  </div>
+
+  <!-- 撮影プランと料金 -->
+  <div class="admin-section-card" id="section-plans">
+    <h2>撮影プランと料金</h2>
+
+    <div class="plan-sub-section">
+      <h4>家族写真プラン</h4>
+      <div id="planFamilyList"></div>
+      <button class="btn-add-item" onclick="addPlanItem('family')">＋ プランを追加</button>
+    </div>
+
+    <div class="plan-sub-section">
+      <h4>七五三プラン</h4>
+      <div id="plan753List"></div>
+      <button class="btn-add-item" onclick="addPlanItem('753')">＋ プランを追加</button>
+    </div>
+
+    <div class="plan-sub-section">
+      <h4>お宮参りプラン</h4>
+      <div id="planOmiyaList"></div>
+      <button class="btn-add-item" onclick="addPlanItem('omiya')">＋ プランを追加</button>
+    </div>
+
+    <!-- ★追加：ナチュラルニューボーン -->
+    <div class="plan-sub-section">
+      <h4>ナチュラルニューボーンプラン</h4>
+      <div id="planNewbornList"></div>
+      <button class="btn-add-item" onclick="addPlanItem('newborn')">＋ プランを追加</button>
+    </div>
+
+    <button class="btn-section-save" onclick="saveSection('plans', this)">✓ 料金プランを保存</button>
+  </div>
+
+  <!-- お客様の声 -->
+  <div class="admin-section-card" id="section-reviews">
+    <h2>お客様の声</h2>
+    <div id="reviewList"></div>
+    <button class="btn-add-item" onclick="addReview()">＋ 追加</button>
+    <button class="btn-section-save" onclick="saveSection('reviews', this)">✓ お客様の声を保存</button>
+  </div>
+
+  <!-- FAQ -->
+  <div class="admin-section-card" id="section-faq">
+    <h2>よくある質問（FAQ）</h2>
+    <div id="faqList"></div>
+    <button class="btn-add-item" onclick="addFaq()">＋ 追加</button>
+    <button class="btn-section-save" onclick="saveSection('faq', this)">✓ FAQを保存</button>
+  </div>
+
+  <!-- LINE -->
+  <div class="admin-section-card" id="section-line">
+    <h2>LINE公式アカウントURL</h2>
+    <div class="form-group">
+      <label class="form-label">LINE URL</label>
+      <input class="form-input" id="lineUrl" type="text" placeholder="https://line.me/ここを差し替え">
+    </div>
+    <button class="btn-section-save" onclick="saveSection('line', this)">✓ LINE URLを保存</button>
+  </div>
+
+  <!-- フェード設定 -->
+  <div class="admin-section-card" id="section-fade">
+    <h2>フェードイン設定</h2>
+    <p style="font-size:12px;color:var(--text-light);margin-bottom:16px;line-height:1.7;">
+      ONにしたセクションはスクロール時にふわっとフェードインします。<br>
+      保存後にサイトを確認してください。
+    </p>
+    <div class="fade-setting-item">
+      <span>ヒーロー（キャッチコピー）</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="fade-hero" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div class="fade-setting-item">
+      <span>プロフィール</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="fade-profile" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div class="fade-setting-item">
+      <span>Plan（撮影プラン）</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="fade-plan" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div class="fade-setting-item">
+      <span>Gallery（ギャラリー）</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="fade-gallery" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div class="fade-setting-item">
+      <span>お客様の声</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="fade-voice" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div class="fade-setting-item">
+      <span>FAQ（よくある質問）</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="fade-faq" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div class="fade-setting-item">
+      <span>お問い合わせ</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="fade-contact" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <button class="btn-section-save" onclick="saveFadeSettings(this)">✓ フェード設定を保存</button>
+  </div>
+
+  <!-- 画像位置・大きさ調整 -->
+  <div class="admin-section-card" id="section-imgadjust">
+    <h2>画像の位置・大きさ調整</h2>
+    <p style="font-size:12px;color:var(--text-light);margin-bottom:20px;line-height:1.7;">
+      スライダーで各画像の表示位置・大きさを調整し「保存する」を押してください。<br>
+      保存後にトップページを確認してください。
+    </p>
+    <div id="imgAdjustPanels"></div>
+    <button onclick="saveImageSettings(this)" class="btn-section-save" style="margin-top:24px;">
+      ✓ 画像設定を保存
+    </button>
+  </div>
+
+  <div class="save-bar">
+    <button class="btn-save-main" id="saveBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V7l-4-4zm-5 16a3 3 0 110-6 3 3 0 010 6zm3-10H5V5h10v4z"/></svg>
+      すべて保存
+    </button>
+  </div>
+
+</div><!-- /admin-wrap -->
+  </div><!-- /admin-main-inner -->
+  </div><!-- /admin-main -->
+</div><!-- /admin-layout -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PASS = 'asuphoto2025';
+
+/* ── 保存ラッパー ── */
+/* saveData はlocalStorageのみ。GAS送信は各保存ボタンで行う */
+function saveData(d) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(d));
+}
+function saveFadeData(settings) {
+  localStorage.setItem('fadeSettings', JSON.stringify(settings));
+}
+function saveImageData(settings) {
+  localStorage.setItem('imageSettings', JSON.stringify(settings));
+}
+
+/* ── GAS（Googleスプレッドシート）連携 ── */
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzPeZ6yA_HMLv2Pqo2f1udSX6hRW9SFSxfoZC0_tzHK04i0k9XySxaGcN22wm_LN1c_/exec';
+
+async function saveToGAS(data) {
+  try {
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(data));
+    await fetch(GAS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: formData
+    });
+    console.log('[GAS] 保存完了');
+  } catch(e) {
+    console.error('[GAS] 保存エラー:', e);
+  }
+}
+
+async function saveAllToGAS() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  const allData = raw ? JSON.parse(raw) : {};
+
+  /* ── Base64画像を除外（GASセル上限50,000文字対策） ── */
+  const gasData = {};
+  Object.keys(allData).forEach(function(key) {
+    const val = allData[key];
+    if (key === 'images' && typeof val === 'object' && val !== null) {
+      /* images: Base64(data:image...)は除外、Drive URL(https://)は残す */
+      const filteredImgs = {};
+      Object.keys(val).forEach(function(k) {
+        if (typeof val[k] !== 'string' || !val[k].startsWith('data:')) {
+          filteredImgs[k] = val[k];
+        }
+      });
+      gasData.images = filteredImgs;
+    } else if (typeof val === 'string' && val.startsWith('data:')) {
+      /* トップレベルのBase64も除外 */
+    } else {
+      gasData[key] = val;
+    }
+  });
+
+  /* fadeSettings・imageSettings も追加 */
+  const fade = localStorage.getItem('fadeSettings');
+  if (fade) { try { gasData.fadeSettings = JSON.parse(fade); } catch(e) {} }
+  const imgSet = localStorage.getItem('imageSettings');
+  if (imgSet) { try { gasData.imageSettings = JSON.parse(imgSet); } catch(e) {} }
+
+  /* サイズ確認（デバッグ用） */
+  const json = JSON.stringify(gasData);
+  console.log('[GAS] 送信データサイズ:', json.length, '文字');
+  if (json.length > 49000) {
+    console.warn('[GAS] ⚠ データが大きすぎます（' + json.length + '文字）。セル上限に近いです');
+  }
+
+  await saveToGAS(gasData);
+}
+
+/* ── GAS接続テスト（JSONPで確認） ── */
+function testGASConnection() {
+  showToast('🔍 GAS接続テスト中...');
+  var cb = '_gasTest_' + Date.now();
+  var timeout = setTimeout(function() {
+    delete window[cb];
+    showToast('⚠️ GASタイムアウト - GASを再デプロイしてください');
+  }, 10000);
+  window[cb] = function(data) {
+    clearTimeout(timeout);
+    delete window[cb];
+    if (data && typeof data === 'object' && Object.keys(data).length > 0) {
+      showToast('✅ GAS接続OK（' + Object.keys(data).length + 'キー取得）');
+    } else {
+      showToast('⚠️ GAS接続OK - データなし（一度保存してください）');
+    }
+  };
+  var script = document.createElement('script');
+  script.src = GAS_URL + '?callback=' + cb + '&t=' + Date.now();
+  script.onerror = function() {
+    clearTimeout(timeout);
+    delete window[cb];
+    showToast('❌ GAS接続エラー - URLとデプロイを確認してください');
+  };
+  document.head.appendChild(script);
+}
+
+/* ── Auth ── */
+function checkLogin() {
+  return sessionStorage.getItem('ap_auth') === '1';
+}
+function showAdmin() {
+  document.getElementById('loginWrap').style.display = 'none';
+  document.getElementById('adminHeader').style.display = 'flex';
+  document.getElementById('adminLayout').style.display = 'flex';
+  loadAll();
+  initSidebar();
+}
+
+/* ログイン済みの場合の showAdmin() 呼び出しはスクリプト末尾へ移動 */
+
+document.getElementById('loginBtn').addEventListener('click', doLogin);
+document.getElementById('pwInput').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+function doLogin() {
+  const val = document.getElementById('pwInput').value;
+  if (val === PASS) {
+    sessionStorage.setItem('ap_auth', '1');
+    showAdmin();
+  } else {
+    document.getElementById('loginError').textContent = 'パスワードが正しくありません';
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+  }
+}
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  sessionStorage.removeItem('ap_auth');
+  location.reload();
+});
+
+/* ── Image upload helper ── */
+
+/* onchange="handleImgUpload(event,'key','previewId')" で使用 */
+function handleImgUpload(event, key, previewId) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const base64 = e.target.result;
+    const prev = document.getElementById(previewId);
+    if (prev) { prev.src = base64; prev.style.display = 'block'; }
+    const d = getData();
+    if (!d.images) d.images = {};
+    d.images[key] = base64;
+    saveData(d);
+  };
+  reader.readAsDataURL(file);
+}
+
+function bindImgUpload(inputId, previewId, storageKey) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  input.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    resizeAndEncode(file, b64 => {
+      document.getElementById(previewId).src = b64;
+      const d = getData();
+      if (!d.images) d.images = {};
+      d.images[storageKey] = b64;
+      saveData(d);
+      showToast('画像を保存しました');
+    });
+  });
+}
+
+/* ── Build hero image uploads — 4枚 ── */
+function buildHeroImgGroup() {
+  const wrap = document.getElementById('heroImgGroup');
+  const phs = [
+    'https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=200&h=267&fit=crop&q=70',
+    'https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=200&h=267&fit=crop&q=70',
+    'https://images.unsplash.com/photo-1511895426328-dc8714191011?w=200&h=267&fit=crop&q=70',
+    'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=200&h=267&fit=crop&q=70',
+  ];
+  [1,2,3,4].forEach((n, i) => {
+    const key = `hero${n}`;
+    const inputId = `heroFile${n}`;
+    const prevId = `heroPrev${n}`;
+    const src = getImage(key, phs[i]);
+    wrap.insertAdjacentHTML('beforeend', `
+      <div class="img-upload-row">
+        <div class="img-preview-wrap">
+          <img class="img-preview" id="${prevId}" src="${src}" alt="ヒーロー${n}">
+        </div>
+        <div class="img-upload-side">
+          <span class="img-upload-name">写真 ${n}</span>
+          <label class="btn-upload-label" for="${inputId}">ファイルを選択</label>
+          <input type="file" id="${inputId}" accept="image/jpeg,image/png,image/webp">
+        </div>
+      </div>`);
+    bindImgUpload(inputId, prevId, key);
+  });
+}
+
+/* ── Build plan card image uploads — 4プラン ── */
+function buildPlanImgGroup() {
+  const wrap = document.getElementById('planImgGroup');
+  const defs = [
+    { key: 'plan_family',  label: '家族写真',             ph: 'https://images.unsplash.com/photo-1609220136736-443140cfeaa8?w=200&h=267&fit=crop&q=70' },
+    { key: 'plan_753',     label: '七五三',               ph: 'https://images.unsplash.com/photo-1545389336-cf090694435e?w=200&h=267&fit=crop&q=70' },
+    { key: 'plan_omiya',   label: 'お宮参り',             ph: 'https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?w=200&h=267&fit=crop&q=70' },
+    { key: 'plan_newborn', label: 'ナチュラルニューボーン', ph: 'https://images.unsplash.com/photo-1555252333-9f8e92e65df9?w=200&h=267&fit=crop&q=70' },
+  ];
+  defs.forEach((p, i) => {
+    const inputId = `planFile_${i}`;
+    const prevId = `planPrev_${i}`;
+    const src = getImage(p.key, p.ph);
+    wrap.insertAdjacentHTML('beforeend', `
+      <div class="img-upload-row">
+        <div class="img-preview-wrap">
+          <img class="img-preview" id="${prevId}" src="${src}" alt="${p.label}">
+        </div>
+        <div class="img-upload-side">
+          <span class="img-upload-name">${p.label}</span>
+          <label class="btn-upload-label" for="${inputId}">ファイルを選択</label>
+          <input type="file" id="${inputId}" accept="image/jpeg,image/png,image/webp">
+        </div>
+      </div>`);
+    bindImgUpload(inputId, prevId, p.key);
+  });
+}
+
+/* ── Build gallery index image uploads — 4枚 ── */
+function buildGalleryIdxGroup() {
+  const wrap = document.getElementById('galleryIdxGroup');
+  const defs = [
+    { key: 'gallery_idx_1', label: 'プレビュー写真 1', ph: 'https://images.unsplash.com/photo-1511895426328-dc8714191011?w=200&h=150&fit=crop&q=70' },
+    { key: 'gallery_idx_2', label: 'プレビュー写真 2', ph: 'https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=200&h=150&fit=crop&q=70' },
+    { key: 'gallery_idx_3', label: 'プレビュー写真 3', ph: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=200&h=150&fit=crop&q=70' },
+    { key: 'gallery_idx_4', label: 'プレビュー写真 4', ph: 'https://images.unsplash.com/photo-1484665761550-b80f81b7c2fa?w=200&h=150&fit=crop&q=70' },
+  ];
+  defs.forEach((g, i) => {
+    const inputId = `galleryIdxFile_${i}`;
+    const prevId = `galleryIdxPrev_${i}`;
+    const src = getImage(g.key, g.ph);
+    wrap.insertAdjacentHTML('beforeend', `
+      <div class="img-upload-row">
+        <div class="img-preview-wrap">
+          <img class="img-preview" id="${prevId}" src="${src}" alt="${g.label}">
+        </div>
+        <div class="img-upload-side">
+          <span class="img-upload-name">${g.label}</span>
+          <label class="btn-upload-label" for="${inputId}">ファイルを選択</label>
+          <input type="file" id="${inputId}" accept="image/jpeg,image/png,image/webp">
+        </div>
+      </div>`);
+    bindImgUpload(inputId, prevId, g.key);
+  });
+}
+
+/* ── Gallery multi-upload ── */
+function buildGalleryGrid() {
+  const d = getData();
+  const imgs = (d.images && Array.isArray(d.images.gallery)) ? d.images.gallery : [];
+  const grid = document.getElementById('galleryGrid');
+  grid.innerHTML = '';
+  imgs.forEach((src, i) => {
+    const item = document.createElement('div');
+    item.className = 'gallery-upload-item';
+    item.innerHTML = `<img src="${src}" alt="ギャラリー${i+1}">
+      <button class="btn-rm-img" data-idx="${i}" title="削除">×</button>`;
+    item.querySelector('.btn-rm-img').addEventListener('click', () => removeGalleryImg(i));
+    grid.appendChild(item);
+  });
+}
+
+document.getElementById('galleryFileInput').addEventListener('change', e => {
+  const files = Array.from(e.target.files);
+  let processed = 0;
+  const d = getData();
+  if (!d.images) d.images = {};
+  if (!Array.isArray(d.images.gallery)) d.images.gallery = [];
+
+  files.forEach(file => {
+    resizeAndEncode(file, b64 => {
+      d.images.gallery.push(b64);
+      processed++;
+      if (processed === files.length) {
+        saveData(d);
+        buildGalleryGrid();
+        showToast(`${files.length}枚の写真を追加しました`);
+      }
+    });
+  });
+  e.target.value = '';
+});
+
+function removeGalleryImg(idx) {
+  const d = getData();
+  if (d.images && Array.isArray(d.images.gallery)) {
+    d.images.gallery.splice(idx, 1);
+    saveData(d);
+    buildGalleryGrid();
+  }
+}
+
+/* ── Profile image ── */
+document.getElementById('profileFile').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  resizeAndEncode(file, b64 => {
+    document.getElementById('profileImgPrev').src = b64;
+    const d = getData();
+    if (!d.images) d.images = {};
+    d.images.profile = b64;
+    saveData(d);
+    showToast('プロフィール写真を保存しました');
+  });
+});
+
+/* ── Plan items ── */
+function planItemHtml(type, i, item) {
+  const incl = Array.isArray(item.includes) ? item.includes.join('\n') : (item.includes || '');
+  return `
+    <div class="repeater-item" data-type="${type}" data-i="${i}">
+      <button class="btn-rm-item" onclick="removePlanItem('${type}',${i})" title="削除">×</button>
+      <div class="form-group">
+        <label class="form-label">プラン名（英語）</label>
+        <input class="form-input plan-en" type="text" value="${item.en || ''}" placeholder="Standard Plan">
+      </div>
+      <div class="form-group">
+        <label class="form-label">プラン名（日本語）</label>
+        <input class="form-input plan-ja" type="text" value="${item.ja || ''}" placeholder="スタンダードプラン">
+      </div>
+      <div class="form-group">
+        <label class="form-label">料金</label>
+        <input class="form-input plan-price" type="text" value="${item.price || ''}" placeholder="¥30,000">
+      </div>
+      <div class="form-group">
+        <label class="form-label">注記（税込など）</label>
+        <input class="form-input plan-note" type="text" value="${item.note || ''}" placeholder="出張費込み・税込">
+      </div>
+      <div class="form-group">
+        <label class="form-label">含まれるもの（1行1項目）</label>
+        <textarea class="form-textarea plan-includes" rows="4" placeholder="撮影時間 約60分&#10;データ納品 50枚以上">${incl}</textarea>
+      </div>
+    </div>`;
+}
+
+const planDefaults = {
+  family: [
+    { en:'Standard Plan', ja:'スタンダードプラン', price:'¥30,000', note:'出張費込み・税込', includes:['撮影時間 約60分','データ納品 50枚以上','オンラインデータ納品','撮影場所へのご出張','簡易レタッチ込み'] },
+    { en:'Premium Plan',  ja:'プレミアムプラン',  price:'¥45,000', note:'出張費込み・税込', includes:['撮影時間 約90分','データ納品 100枚以上','オンラインデータ納品','撮影場所へのご出張','丁寧なレタッチ込み','お着替え1回対応'] },
+  ],
+  '753': [
+    { en:'Standard Plan', ja:'スタンダードプラン', price:'¥35,000', note:'出張費込み・税込', includes:['撮影時間 約60分','データ納品 50枚以上','オンラインデータ納品','神社・公園などへのご出張','簡易レタッチ込み'] },
+    { en:'Premium Plan',  ja:'プレミアムプラン',  price:'¥50,000', note:'出張費込み・税込', includes:['撮影時間 約90分','データ納品 100枚以上','オンラインデータ納品','神社・公園などへのご出張','丁寧なレタッチ込み','お着替え1回対応','きょうだい・家族カットも対応'] },
+  ],
+  omiya: [
+    { en:'Standard Plan', ja:'スタンダードプラン', price:'¥28,000', note:'出張費込み・税込', includes:['撮影時間 約45分','データ納品 40枚以上','オンラインデータ納品','神社・公園などへのご出張','簡易レタッチ込み'] },
+    { en:'Premium Plan',  ja:'プレミアムプラン',  price:'¥42,000', note:'出張費込み・税込', includes:['撮影時間 約75分','データ納品 80枚以上','オンラインデータ納品','神社・公園などへのご出張','丁寧なレタッチ込み','ご家族全員での記念カット対応'] },
+  ],
+  newborn: [
+    { en:'Standard Plan', ja:'スタンダードプラン', price:'¥30,000', note:'出張費込み・税込', includes:['撮影時間 約60分','データ納品 50枚以上','オンラインデータ納品','ご自宅または撮影場所へのご出張','簡易レタッチ込み'] },
+    { en:'Premium Plan',  ja:'プレミアムプラン',  price:'¥45,000', note:'出張費込み・税込', includes:['撮影時間 約90分','データ納品 100枚以上','オンラインデータ納品','ご自宅または撮影場所へのご出張','丁寧なレタッチ込み','家族カット対応'] },
+  ],
+};
+
+function renderPlanList(type) {
+  const d = getData();
+  const items = (d.plans && d.plans[type] && d.plans[type].length) ? d.plans[type] : planDefaults[type];
+  const listId = { family:'planFamilyList', '753':'plan753List', omiya:'planOmiyaList', newborn:'planNewbornList' }[type];
+  const el = document.getElementById(listId);
+  el.innerHTML = items.map((item,i) => planItemHtml(type, i, item)).join('');
+}
+
+function addPlanItem(type) {
+  const d = getData();
+  if (!d.plans) d.plans = {};
+  if (!d.plans[type]) d.plans[type] = JSON.parse(JSON.stringify(planDefaults[type]));
+  d.plans[type].push({ en:'', ja:'', price:'', note:'', includes:[] });
+  saveData(d);
+  renderPlanList(type);
+}
+
+function removePlanItem(type, idx) {
+  const d = getData();
+  if (!d.plans) d.plans = {};
+  if (!d.plans[type]) d.plans[type] = JSON.parse(JSON.stringify(planDefaults[type]));
+  d.plans[type].splice(idx, 1);
+  saveData(d);
+  renderPlanList(type);
+}
+
+/* ── Reviews ── */
+function reviewHtml(i, item) {
+  return `
+    <div class="repeater-item">
+      <button class="btn-rm-item" onclick="removeReview(${i})" title="削除">×</button>
+      <div class="form-group">
+        <label class="form-label">お客様のコメント</label>
+        <textarea class="form-textarea rv-text" rows="3" placeholder="感想を入力">${item.text || ''}</textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">お名前（例：S.M. 様）</label>
+        <input class="form-input rv-name" type="text" value="${item.name || ''}" placeholder="S.M. 様（家族写真）">
+      </div>
+    </div>`;
+}
+
+const defaultReviews = [
+  { text:'子どもたちが自然な表情でいられるよう寄り添ってくださり、一生の宝物になる写真を撮っていただきました。', name:'S.M. 様（家族写真）' },
+  { text:'七五三の撮影をお願いしました。人見知りの子どもも、気づいたら笑顔になっていて驚きました。', name:'K.T. 様（七五三）' },
+  { text:'お宮参りの大切な日を丁寧に記録してくださいました。写真を見るたびにあの日の空気を思い出せます。', name:'Y.N. 様（お宮参り）' },
+];
+
+function renderReviews() {
+  const d = getData();
+  const items = (d.reviews && d.reviews.length) ? d.reviews : defaultReviews;
+  document.getElementById('reviewList').innerHTML = items.map((r,i) => reviewHtml(i,r)).join('');
+}
+
+function addReview() {
+  const d = getData();
+  if (!d.reviews) d.reviews = JSON.parse(JSON.stringify(defaultReviews));
+  d.reviews.push({ text:'', name:'' });
+  saveData(d);
+  renderReviews();
+}
+
+function removeReview(idx) {
+  const d = getData();
+  if (!d.reviews) d.reviews = JSON.parse(JSON.stringify(defaultReviews));
+  d.reviews.splice(idx, 1);
+  saveData(d);
+  renderReviews();
+}
+
+/* ── FAQ ── */
+function faqHtml(i, item) {
+  return `
+    <div class="repeater-item">
+      <button class="btn-rm-item" onclick="removeFaq(${i})" title="削除">×</button>
+      <div class="form-group">
+        <label class="form-label">質問</label>
+        <input class="form-input faq-q" type="text" value="${item.q || ''}" placeholder="質問を入力">
+      </div>
+      <div class="form-group">
+        <label class="form-label">回答</label>
+        <textarea class="form-textarea faq-a" rows="3" placeholder="回答を入力">${item.a || ''}</textarea>
+      </div>
+    </div>`;
+}
+
+const defaultFaqs = [
+  { q:'撮影エリアはどこですか？', a:'関東全域へ出張いたします。公園・神社・ご自宅・海・山など、ご希望の場所へお伺いします。' },
+  { q:'雨天の場合はどうなりますか？', a:'天候が悪い場合は日程を変更いたします。撮影前日〜当日朝にご相談させてください。' },
+  { q:'納品はいつ頃になりますか？', a:'撮影後おおむね2〜4週間以内にデータをオンラインでお渡しします。' },
+  { q:'衣装はどうすればいいですか？', a:'ご自由にご用意ください。七五三・お宮参りは和装・洋装どちらでも対応しています。' },
+  { q:'兄弟・祖父母も一緒に撮れますか？', a:'もちろん大丈夫です。人数に応じてプランやお時間をご相談させてください。' },
+];
+
+function renderFaqs() {
+  const d = getData();
+  const items = (d.faqs && d.faqs.length) ? d.faqs : defaultFaqs;
+  document.getElementById('faqList').innerHTML = items.map((f,i) => faqHtml(i,f)).join('');
+}
+
+function addFaq() {
+  const d = getData();
+  if (!d.faqs) d.faqs = JSON.parse(JSON.stringify(defaultFaqs));
+  d.faqs.push({ q:'', a:'' });
+  saveData(d);
+  renderFaqs();
+}
+
+function removeFaq(idx) {
+  const d = getData();
+  if (!d.faqs) d.faqs = JSON.parse(JSON.stringify(defaultFaqs));
+  d.faqs.splice(idx, 1);
+  saveData(d);
+  renderFaqs();
+}
+
+/* ── Color theme ── */
+const COLOR_FIELDS = [
+  { id: 'colorBg',        hexId: 'colorBgHex',        key: 'bg',         cssVar: '--bg',          previewClass: 'cpb-bg',      previewProp: 'background' },
+  { id: 'colorSurface',   hexId: 'colorSurfaceHex',   key: 'surface',    cssVar: '--surface',     previewClass: 'cpb-surface', previewProp: 'background' },
+  { id: 'colorText',      hexId: 'colorTextHex',      key: 'text',       cssVar: '--text',        previewClass: 'cpb-text',    previewProp: 'background' },
+  { id: 'colorTextLight', hexId: 'colorTextLightHex', key: 'textLight',  cssVar: '--text-light',  previewClass: null,          previewProp: null },
+  { id: 'colorAccent',    hexId: 'colorAccentHex',    key: 'accent',     cssVar: '--accent',      previewClass: 'cpb-accent',  previewProp: 'background' },
+  { id: 'colorHeaderBg',  hexId: 'colorHeaderBgHex',  key: 'headerBg',   cssVar: '--header-bg-rgba', previewClass: null,       previewProp: null },
+  { id: 'colorTitle',     hexId: 'colorTitleHex',     key: 'titleColor', cssVar: '--title-color', previewClass: 'cpb-title',   previewProp: 'background' },
+];
+
+function applyPresetById(id, btn) {
+  var preset = null;
+  for (var i = 0; i < THEME_PRESETS.length; i++) {
+    if (THEME_PRESETS[i].id === id) { preset = THEME_PRESETS[i]; break; }
+  }
+  if (!preset) return;
+
+  var fields = [
+    { key: 'bg',         pid: 'colorBg',        hid: 'colorBgHex',        v: '--bg' },
+    { key: 'surface',    pid: 'colorSurface',   hid: 'colorSurfaceHex',   v: '--surface' },
+    { key: 'text',       pid: 'colorText',      hid: 'colorTextHex',      v: '--text' },
+    { key: 'textLight',  pid: 'colorTextLight', hid: 'colorTextLightHex', v: '--text-light' },
+    { key: 'accent',     pid: 'colorAccent',    hid: 'colorAccentHex',    v: '--accent' },
+    { key: 'headerBg',   pid: 'colorHeaderBg',  hid: 'colorHeaderBgHex',  v: '--header-bg-rgba' },
+    { key: 'titleColor', pid: 'colorTitle',     hid: 'colorTitleHex',     v: '--title-color' },
+  ];
+
+  var root = document.documentElement;
+  for (var j = 0; j < fields.length; j++) {
+    var f   = fields[j];
+    var val = preset[f.key] || '#888888';
+    var sw  = document.getElementById(f.pid);
+    var hx  = document.getElementById(f.hid);
+    if (sw)  sw.value  = val;
+    if (hx)  hx.value  = val.toUpperCase();
+
+    if (f.v === '--header-bg-rgba') {
+      var h = val.replace('#','');
+      root.style.setProperty(f.v,
+        'rgba('+parseInt(h.slice(0,2),16)+','+parseInt(h.slice(2,4),16)+','+parseInt(h.slice(4,6),16)+',0.92)');
+    } else {
+      root.style.setProperty(f.v, val);
+    }
+  }
+
+  if (typeof updatePreviewBar === 'function') updatePreviewBar();
+
+  var btns = document.querySelectorAll('.theme-preset-btn');
+  for (var k = 0; k < btns.length; k++) btns[k].classList.remove('active');
+  if (btn) btn.classList.add('active');
+}
+
+function buildThemeSection() {
+  const d = getData();
+  const saved = d.colors || {};
+
+  COLOR_FIELDS.forEach(f => {
+    const swatch = document.getElementById(f.id);
+    const hexInput = document.getElementById(f.hexId);
+    if (!swatch || !hexInput) return;
+
+    const defaultVal = getDefaultColor(f.key);
+    const val = saved[f.key] || defaultVal;
+    swatch.value = val;
+    hexInput.value = val.toUpperCase();
+
+    swatch.addEventListener('input', () => {
+      hexInput.value = swatch.value.toUpperCase();
+      liveApplyColor(f, swatch.value);
+    });
+    hexInput.addEventListener('input', () => {
+      const v = hexInput.value;
+      if (/^#[0-9A-Fa-f]{6}$/.test(v)) {
+        swatch.value = v;
+        liveApplyColor(f, v);
+      }
+    });
+  });
+
+  updatePreviewBar();
+}
+
+function getDefaultColor(key) {
+  const defaults = THEME_PRESETS[0];
+  return defaults[key] || '#888888';
+}
+
+function liveApplyColor(f, val) {
+  const root = document.documentElement;
+  if (f.cssVar === '--header-bg-rgba') {
+    root.style.setProperty(f.cssVar, hexToRgba(val, 0.92));
+  } else {
+    root.style.setProperty(f.cssVar, val);
+  }
+  updatePreviewBar();
+}
+
+function updatePreviewBar() {
+  const root = document.documentElement;
+  COLOR_FIELDS.forEach(f => {
+    if (!f.previewClass) return;
+    const el = document.querySelector('.' + f.previewClass);
+    if (!el) return;
+    const val = document.getElementById(f.id)?.value || getDefaultColor(f.key);
+    el.style.background = val;
+    const r = parseInt(val.slice(1,3),16), g = parseInt(val.slice(3,5),16), b = parseInt(val.slice(5,7),16);
+    const brightness = (r*299 + g*587 + b*114) / 1000;
+    el.style.color = brightness > 128 ? '#333' : '#fff';
+  });
+}
+
+/* ── Font selects ── */
+function onFontChange(selId, prevId, cssVar, val) {
+  const sel = document.getElementById(selId);
+  const prev = document.getElementById(prevId);
+  if (sel)  sel.style.fontFamily = val;
+  if (prev) prev.style.fontFamily = val;
+  document.documentElement.style.setProperty(cssVar, val);
+}
+
+function buildFontSelects() {
+  const d = getData();
+  const saved = d.fonts || {};
+  const configs = [
+    { id: 'fontBody',    prevId: 'prevBody',    key: 'body',    cssVar: '--font-body' },
+    { id: 'fontDisplay', prevId: 'prevDisplay', key: 'display', cssVar: '--font-display' },
+    { id: 'fontCatch',   prevId: 'prevCatch',   key: 'catch',   cssVar: '--font-catch' },
+  ];
+  configs.forEach(({ id, prevId, key, cssVar }) => {
+    const sel  = document.getElementById(id);
+    const prev = document.getElementById(prevId);
+    if (!sel || !sel.options.length) return;
+    const saved_val = saved[key] || '';
+    sel.value = saved_val;
+    if (!sel.value) sel.value = sel.options[0].value;
+    onFontChange(id, prevId, cssVar, sel.value);
+  });
+}
+
+/* ── Sidebar ── */
+function initSidebar() {
+  const sidebar  = document.getElementById('adminSidebar');
+  const overlay  = document.getElementById('sidebarOverlay');
+  const toggle   = document.getElementById('sidebarToggle');
+
+  function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('open');
+  }
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+
+  toggle  && toggle.addEventListener('click', () => sidebar.classList.contains('open') ? closeSidebar() : openSidebar());
+  overlay && overlay.addEventListener('click', closeSidebar);
+
+  document.querySelectorAll('.sidebar-nav-item[data-target]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = document.getElementById(btn.dataset.target);
+      if (target) {
+        const yPos = target.getBoundingClientRect().top + window.scrollY - 72;
+        window.scrollTo({ top: yPos, behavior: 'smooth' });
+      }
+      if (window.innerWidth <= 768) closeSidebar();
+    });
+  });
+
+  const sections = document.querySelectorAll('.admin-section-card[id]');
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          document.querySelectorAll('.sidebar-nav-item').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.target === id);
+          });
+        }
+      });
+    }, { rootMargin: '-20% 0px -60% 0px', threshold: 0 });
+    sections.forEach(s => obs.observe(s));
+  }
+}
+
+/* ── Load all ── */
+function loadAll() {
+  const d = getData();
+
+  document.getElementById('catchcopy').value    = d.catchcopy || '';
+  document.getElementById('subcopy').value      = d.subcopy   || '';
+  document.getElementById('lineUrl').value      = d.lineUrl   || '';
+  document.getElementById('profileText').value  = d.profile   || '';
+
+  const profImg = getImage('profile', 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=267&fit=crop&q=70');
+  document.getElementById('profileImgPrev').src = profImg;
+
+  buildHeroImgGroup();
+  buildPlanImgGroup();
+  buildGalleryIdxGroup();
+  buildGalleryGrid();
+
+  buildThemeSection();
+  buildFontSelects();
+
+  renderPlanList('family');
+  renderPlanList('753');
+  renderPlanList('omiya');
+  renderPlanList('newborn');
+
+  renderReviews();
+  renderFaqs();
+
+  loadFadeSettings();
+  buildImgAdjustPanels();
+}
+
+/* ── Fade settings ── */
+function loadFadeSettings() {
+  var defaults = { hero: true, profile: true, plan: true, gallery: true, voice: true, faq: true, contact: true };
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem('fadeSettings') || '{}'); } catch(e) {}
+  var settings = Object.assign({}, defaults, saved);
+  ['hero','profile','plan','gallery','voice','faq','contact'].forEach(function(key) {
+    var el = document.getElementById('fade-' + key);
+    if (el) el.checked = !!settings[key];
+  });
+}
+
+function saveFadeSettings(btn) {
+  var settings = {
+    hero:    document.getElementById('fade-hero')?.checked    ?? true,
+    profile: document.getElementById('fade-profile')?.checked ?? true,
+    plan:    document.getElementById('fade-plan')?.checked    ?? true,
+    gallery: document.getElementById('fade-gallery')?.checked ?? true,
+    voice:   document.getElementById('fade-voice')?.checked   ?? true,
+    faq:     document.getElementById('fade-faq')?.checked     ?? true,
+    contact: document.getElementById('fade-contact')?.checked ?? true,
+  };
+  saveFadeData(settings);
+  if (btn) {
+    var _orig = btn.textContent;
+    btn.classList.add('saved');
+    btn.textContent = '📡 クラウドに保存中...';
+    saveAllToGAS().then(function() {
+      btn.textContent = '✓ 保存しました！';
+      setTimeout(function() { btn.classList.remove('saved'); btn.textContent = _orig; }, 2200);
+    });
+  } else {
+    saveAllToGAS();
+  }
+}
+
+/* ── 画像位置・大きさ調整パネル — hero4追加 ── */
+var IMG_ADJUST_DEFS = [
+  { key: 'hero1',    label: 'TOPヒーロー 1枚目' },
+  { key: 'hero2',    label: 'TOPヒーロー 2枚目' },
+  { key: 'hero3',    label: 'TOPヒーロー 3枚目' },
+  { key: 'hero4',    label: 'TOPヒーロー 4枚目' },
+  { key: 'profile',  label: 'プロフィール画像' },
+  { key: 'gallery1', label: 'ギャラリー 1枚目' },
+  { key: 'gallery2', label: 'ギャラリー 2枚目' },
+  { key: 'gallery3', label: 'ギャラリー 3枚目' },
+  { key: 'gallery4', label: 'ギャラリー 4枚目' },
+];
+
+function buildImgAdjustPanels() {
+  var wrap = document.getElementById('imgAdjustPanels');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem('imageSettings') || '{}'); } catch(e) {}
+
+  IMG_ADJUST_DEFS.forEach(function(p) {
+    var cfg = saved[p.key] || { x: 50, y: 50, s: 100 };
+    wrap.insertAdjacentHTML('beforeend',
+      '<div class="repeater-item" style="margin-bottom:14px;">' +
+        '<p style="font-size:12px;font-weight:600;letter-spacing:1px;margin-bottom:12px;color:var(--text);">' + p.label + '</p>' +
+        '<div style="margin-bottom:8px;">' +
+          '<label style="font-size:11px;color:var(--text-light);display:flex;justify-content:space-between;margin-bottom:4px;">' +
+            '上下位置 <span id="v-' + p.key + '-y" style="color:var(--text);font-weight:600;">' + cfg.y + '</span>%' +
+          '</label>' +
+          '<input type="range" min="0" max="100" value="' + cfg.y + '" id="' + p.key + '-y"' +
+            ' oninput="document.getElementById(\'v-' + p.key + '-y\').textContent=this.value" style="width:100%;">' +
+        '</div>' +
+        '<div style="margin-bottom:8px;">' +
+          '<label style="font-size:11px;color:var(--text-light);display:flex;justify-content:space-between;margin-bottom:4px;">' +
+            '左右位置 <span id="v-' + p.key + '-x" style="color:var(--text);font-weight:600;">' + cfg.x + '</span>%' +
+          '</label>' +
+          '<input type="range" min="0" max="100" value="' + cfg.x + '" id="' + p.key + '-x"' +
+            ' oninput="document.getElementById(\'v-' + p.key + '-x\').textContent=this.value" style="width:100%;">' +
+        '</div>' +
+        '<div>' +
+          '<label style="font-size:11px;color:var(--text-light);display:flex;justify-content:space-between;margin-bottom:4px;">' +
+            '大きさ <span id="v-' + p.key + '-s" style="color:var(--text);font-weight:600;">' + cfg.s + '</span>%' +
+          '</label>' +
+          '<input type="range" min="80" max="130" value="' + cfg.s + '" id="' + p.key + '-s"' +
+            ' oninput="document.getElementById(\'v-' + p.key + '-s\').textContent=this.value" style="width:100%;">' +
+        '</div>' +
+      '</div>');
+  });
+}
+
+function saveImageSettings(btn) {
+  var keys = ['hero1','hero2','hero3','hero4','profile','gallery1','gallery2','gallery3','gallery4'];
+  var settings = {};
+  keys.forEach(function(key) {
+    var xEl = document.getElementById(key + '-x');
+    var yEl = document.getElementById(key + '-y');
+    var sEl = document.getElementById(key + '-s');
+    if (xEl && yEl && sEl) {
+      settings[key] = { x: xEl.value, y: yEl.value, s: sEl.value };
+    }
+  });
+  saveImageData(settings);
+  if (btn) {
+    var _orig = btn.textContent;
+    btn.classList.add('saved');
+    btn.textContent = '📡 クラウドに保存中...';
+    saveAllToGAS().then(function() {
+      btn.textContent = '✓ 保存しました！';
+      setTimeout(function() { btn.classList.remove('saved'); btn.textContent = _orig; }, 2200);
+    });
+  } else {
+    saveAllToGAS();
+  }
+}
+
+/* ── セクション個別保存 ── */
+function saveSection(section, btn) {
+  const d = getData();
+
+  if (section === 'color') {
+    d.colors = {};
+    COLOR_FIELDS.forEach(f => {
+      const val = document.getElementById(f.id)?.value;
+      if (val) d.colors[f.key] = val;
+    });
+    applyColors();
+  }
+  else if (section === 'font') {
+    d.fonts = {
+      body:    document.getElementById('fontBody')?.value    || '',
+      display: document.getElementById('fontDisplay')?.value || '',
+      catch:   document.getElementById('fontCatch')?.value   || '',
+    };
+    applyFonts();
+  }
+  else if (section === 'catch') {
+    d.catchcopy = document.getElementById('catchcopy').value.trim();
+    d.subcopy   = document.getElementById('subcopy').value.trim();
+  }
+  else if (section === 'profile') {
+    d.profile = document.getElementById('profileText').value.trim();
+  }
+  else if (section === 'plans') {
+    const typeMap = { family: 'planFamilyList', '753': 'plan753List', omiya: 'planOmiyaList', newborn: 'planNewbornList' };
+    if (!d.plans) d.plans = {};
+    Object.keys(typeMap).forEach(type => {
+      const items = [];
+      document.querySelectorAll(`#${typeMap[type]} .repeater-item`).forEach(el => {
+        const inclRaw = el.querySelector('.plan-includes').value;
+        items.push({
+          en: el.querySelector('.plan-en').value.trim(),
+          ja: el.querySelector('.plan-ja').value.trim(),
+          price: el.querySelector('.plan-price').value.trim(),
+          note: el.querySelector('.plan-note').value.trim(),
+          includes: inclRaw.split('\n').map(s => s.trim()).filter(Boolean),
+        });
+      });
+      d.plans[type] = items;
+    });
+  }
+  else if (section === 'reviews') {
+    const rvs = [];
+    document.querySelectorAll('#reviewList .repeater-item').forEach(el => {
+      rvs.push({ text: el.querySelector('.rv-text').value.trim(), name: el.querySelector('.rv-name').value.trim() });
+    });
+    d.reviews = rvs;
+  }
+  else if (section === 'faq') {
+    const fqs = [];
+    document.querySelectorAll('#faqList .repeater-item').forEach(el => {
+      fqs.push({ q: el.querySelector('.faq-q').value.trim(), a: el.querySelector('.faq-a').value.trim() });
+    });
+    d.faqs = fqs;
+  }
+  else if (section === 'line') {
+    d.lineUrl = document.getElementById('lineUrl').value.trim();
+  }
+
+  try {
+    saveData(d);
+  } catch(e) {
+    showToast(e.name === 'QuotaExceededError'
+      ? '⚠ 容量不足です。不要な画像を削除してください。'
+      : '保存に失敗しました');
+    return;
+  }
+  if (btn) {
+    var _orig = btn.textContent;
+    btn.classList.add('saved');
+    btn.textContent = '📡 クラウドに保存中...';
+    saveAllToGAS().then(function() {
+      btn.textContent = '✓ 保存しました！';
+      setTimeout(function() { btn.classList.remove('saved'); btn.textContent = _orig; }, 2200);
+    });
+  } else {
+    saveAllToGAS();
+  }
+}
+
+/* ── 全体保存 ── */
+document.getElementById('saveBtn').addEventListener('click', () => {
+  const d = getData();
+
+  d.colors = {};
+  COLOR_FIELDS.forEach(f => {
+    const val = document.getElementById(f.id)?.value;
+    if (val) d.colors[f.key] = val;
+  });
+  applyColors();
+
+  d.fonts = {
+    body:    document.getElementById('fontBody')?.value    || '',
+    display: document.getElementById('fontDisplay')?.value || '',
+    catch:   document.getElementById('fontCatch')?.value   || '',
+  };
+  applyFonts();
+
+  d.catchcopy = document.getElementById('catchcopy').value.trim();
+  d.subcopy   = document.getElementById('subcopy').value.trim();
+  d.lineUrl   = document.getElementById('lineUrl').value.trim();
+  d.profile   = document.getElementById('profileText').value.trim();
+
+  const typeMap = { family: 'planFamilyList', '753': 'plan753List', omiya: 'planOmiyaList', newborn: 'planNewbornList' };
+  if (!d.plans) d.plans = {};
+  Object.keys(typeMap).forEach(type => {
+    const items = [];
+    document.querySelectorAll(`#${typeMap[type]} .repeater-item`).forEach(el => {
+      const inclRaw = el.querySelector('.plan-includes').value;
+      items.push({
+        en:      el.querySelector('.plan-en').value.trim(),
+        ja:      el.querySelector('.plan-ja').value.trim(),
+        price:   el.querySelector('.plan-price').value.trim(),
+        note:    el.querySelector('.plan-note').value.trim(),
+        includes: inclRaw.split('\n').map(s => s.trim()).filter(Boolean),
+      });
+    });
+    d.plans[type] = items;
+  });
+
+  const rvs = [];
+  document.querySelectorAll('#reviewList .repeater-item').forEach(el => {
+    rvs.push({
+      text: el.querySelector('.rv-text').value.trim(),
+      name: el.querySelector('.rv-name').value.trim(),
+    });
+  });
+  d.reviews = rvs;
+
+  const fqs = [];
+  document.querySelectorAll('#faqList .repeater-item').forEach(el => {
+    fqs.push({
+      q: el.querySelector('.faq-q').value.trim(),
+      a: el.querySelector('.faq-a').value.trim(),
+    });
+  });
+  d.faqs = fqs;
+
+  const _btn = document.getElementById('saveBtn');
+  const _btnHTML = _btn ? _btn.innerHTML : '';
+  try {
+    saveData(d);
+  } catch(e) {
+    if (e.name === 'QuotaExceededError') {
+      showToast('⚠ 容量不足です。不要な画像を削除してください。');
+    } else {
+      showToast('保存に失敗しました');
+    }
+    return;
+  }
+  if (_btn) { _btn.textContent = '📡 クラウドに保存中...'; _btn.disabled = true; }
+  saveAllToGAS().then(function() {
+    showToast('✓ 保存しました！全ページに反映されます');
+    setTimeout(function() { alert('💾 保存完了！\n「サイトを確認する」を押してHPを確認してください。'); }, 300);
+    if (_btn) {
+      _btn.textContent = '✓ 保存しました！';
+      setTimeout(function() { _btn.disabled = false; _btn.innerHTML = _btnHTML; }, 2200);
+    }
+  });
+});
+
+/* ── すべての const/var 宣言が完了してから自動ログイン判定 ── */
+if (checkLogin()) showAdmin();
+</script>
+</body>
+</html>

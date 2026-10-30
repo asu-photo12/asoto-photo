@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asu Photo | 出張撮影カメラマン</title>
+  <meta name="description" content="特別な日だけじゃない いつもの幸せを。関東全域へ出張の家族写真・七五三・お宮参り専門カメラマン。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <script src="common.js"></script>
+  <script>applyFonts(); applyColors();</script>
+
+</head>
+<body>
+
+<div id="hd"></div>
+
+<main>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-slider" id="heroSlider"></div>
+    <div class="hero-text-wrap">
+      <p class="hero-catch catch-copy" id="heroCatch"><span class="hero-line">特別な日だけじゃない</span><span class="hero-line">いつもの幸せを</span></p>
+      <p class="hero-sub sub-copy" id="heroSub"><span class="hero-line">笑顔も、泣き顔も</span><span class="hero-line">未来で愛おしくなる瞬間を写します</span></p>
+    </div>
+  </section>
+
+  <!-- PROFILE -->
+  <section id="profile">
+    <div class="profile-inner">
+      <div class="profile-photo-wrap">
+        <div class="profile-photo-shadow"></div>
+        <img id="profileImg" class="profile-img" src="" alt="プロフィール写真">
+      </div>
+      <div class="profile-text">
+        <p class="profile-label">Profile</p>
+        <h2 class="profile-name-en">Asu Photo</h2>
+        <h3 class="profile-name-ja">出張撮影カメラマン</h3>
+        <p class="profile-desc" id="profileDesc">関東を中心に出張撮影を行っているカメラマンです。家族写真・七五三・お宮参りを専門とし、日常の中にある特別な瞬間を大切に記録します。「写真を見るたびに、あの日に戻れる」そんな一枚をお届けしたいと思っています。初めての方も安心していただけるよう、撮影前のご相談を丁寧に行っています。</p>
+        <p class="profile-area">📍 撮影エリア：関東全域（ご希望の場所へ出張）</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAN -->
+  <section id="plan">
+    <div class="section-title">
+      <span class="en-title">Plan</span>
+      <span class="ja-sub">プラン</span>
+    </div>
+    <div class="plan-grid" id="planGrid"></div>
+  </section>
+
+  <!-- GALLERY PREVIEW -->
+  <section id="gallery-preview">
+    <div class="section-title">
+      <span class="en-title">Gallery</span>
+      <span class="ja-sub">ギャラリー</span>
+    </div>
+    <div class="gallery-preview-grid">
+      <img id="gpImg1" src="" alt="ギャラリー写真1" loading="lazy">
+      <img id="gpImg2" src="" alt="ギャラリー写真2" loading="lazy">
+      <img id="gpImg3" src="" alt="ギャラリー写真3" loading="lazy">
+      <img id="gpImg4" src="" alt="ギャラリー写真4" loading="lazy">
+    </div>
+    <div class="gallery-more">
+      <a href="gallery.html" class="btn-outline">すべて見る</a>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews">
+    <div class="section-title">
+      <span class="en-title">Reviews</span>
+      <span class="ja-sub">お客様の声</span>
+    </div>
+    <div class="reviews-grid" id="reviewsGrid"></div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="section-title">
+      <span class="en-title">FAQ</span>
+      <span class="ja-sub">よくある質問</span>
+    </div>
+    <div class="faq-list" id="faqList"></div>
+  </section>
+
+  <!-- LINE CTA -->
+  <section id="line-cta">
+    <div class="line-cta-inner">
+      <h2>ご予約・お問い合わせ</h2>
+      <p>ご不明な点やご要望など、お気軽にLINEからご連絡ください。<br>撮影の流れやプランについてもご相談いただけます。</p>
+      <div style="display:flex; gap:20px; justify-content:center; align-items:center; margin-top:24px;">
+        <a href="#" id="lineBtn" target="_blank" rel="noopener noreferrer"
+           style="display:inline-flex; align-items:center; justify-content:center;
+                  width:56px; height:56px; border-radius:50%;
+                  background:#06C755; text-decoration:none;"
+           aria-label="LINEで予約する">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+            <path d="M12 2C6.48 2 2 6.02 2 11c0 3.07 1.6 5.78 4.07 7.62L5.5 22l4.13-1.37C10.37 20.86 11.17 21 12 21c5.52 0 10-4.02 10-9S17.52 2 12 2z"/>
+          </svg>
+        </a>
+        <a href="https://www.instagram.com/ここを差し替え/" target="_blank" rel="noopener noreferrer"
+           style="display:inline-flex; align-items:center; justify-content:center;
+                  width:56px; height:56px; border-radius:50%;
+                  background:radial-gradient(circle at 30% 110%,
+                    #f09433 0%, #e6683c 25%, #dc2743 50%,
+                    #cc2366 75%, #bc1888 100%);
+                  text-decoration:none;"
+           aria-label="Instagramを見る">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
+               fill="none" stroke="white" stroke-width="2" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1.2" fill="white" stroke="none"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="ft"></div>
+<div id="fc"></div>
+
+<script>
+/* ── GAS経由でデータを同期してからページを初期化 ── */
+var _initDone = false;
+
+function initPage() {
+  if (_initDone) return;
+  _initDone = true;
+
+document.getElementById('hd').innerHTML = renderHeader();
+document.getElementById('ft').innerHTML = renderFooter();
+document.getElementById('fc').innerHTML = renderFixedCta();
+initNav();
+
+/* placeholder images */
+const PH = {
+  hero: [
+    'https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=600&h=800&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=600&h=800&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1511895426328-dc8714191011?w=600&h=800&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=600&h=800&fit=crop&q=80',
+  ],
+  planFamily:  'https://images.unsplash.com/photo-1609220136736-443140cfeaa8?w=400&h=533&fit=crop&q=80',
+  plan753:     'https://images.unsplash.com/photo-1545389336-cf090694435e?w=400&h=533&fit=crop&q=80',
+  planOmiya:   'https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?w=400&h=533&fit=crop&q=80',
+  planNewborn: 'https://images.unsplash.com/photo-1555252333-9f8e92e65df9?w=400&h=533&fit=crop&q=80',
+  gpImg1:      'https://images.unsplash.com/photo-1511895426328-dc8714191011?w=800&h=450&fit=crop&q=80',
+  gpImg2:      'https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=800&h=450&fit=crop&q=80',
+  gpImg3:      'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=800&h=450&fit=crop&q=80',
+  gpImg4:      'https://images.unsplash.com/photo-1484665761550-b80f81b7c2fa?w=800&h=450&fit=crop&q=80',
+  profile:     'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=533&fit=crop&q=80',
+};
+
+const d = getData();
+const lineUrl = d.lineUrl || LINE_URL_DEFAULT;
+document.getElementById('lineBtn').href = lineUrl;
+
+if (d.catchcopy) document.getElementById('heroCatch').innerHTML = '<span class="hero-line">' + d.catchcopy + '</span>';
+if (d.subcopy)   document.getElementById('heroSub').innerHTML   = '<span class="hero-line">' + d.subcopy   + '</span>';
+
+document.getElementById('profileImg').src = getImage('profile', PH.profile);
+if (d.profile) document.getElementById('profileDesc').textContent = d.profile;
+
+document.getElementById('gpImg1').src = getImage('gallery_idx_1', PH.gpImg1);
+document.getElementById('gpImg2').src = getImage('gallery_idx_2', PH.gpImg2);
+document.getElementById('gpImg3').src = getImage('gallery_idx_3', PH.gpImg3);
+document.getElementById('gpImg4').src = getImage('gallery_idx_4', PH.gpImg4);
+
+/* plan cards — 4プラン（家族写真・七五三・お宮参り・ナチュラルニューボーン） */
+const planDefs = [
+  { key: 'plan_family',  ja: '家族写真',             en: 'Family',      href: 'price-family.html',  ph: PH.planFamily  },
+  { key: 'plan_753',     ja: '七五三',               en: 'Shichigosan', href: 'price-753.html',     ph: PH.plan753     },
+  { key: 'plan_omiya',   ja: 'お宮参り',             en: 'Omiyamairi',  href: 'price-omiya.html',   ph: PH.planOmiya   },
+  { key: 'plan_newborn', ja: 'ナチュラルニューボーン', en: 'Newborn',     href: 'price-newborn.html', ph: PH.planNewborn },
+];
+const grid = document.getElementById('planGrid');
+planDefs.forEach(p => {
+  grid.insertAdjacentHTML('beforeend', `
+    <a href="${p.href}" class="plan-card">
+      <img src="${getImage(p.key, p.ph)}" alt="${p.ja}" loading="lazy">
+      <div class="plan-card-body">
+        <p class="plan-card-ja">${p.ja}</p>
+        <p class="plan-card-en">${p.en}</p>
+      </div>
+    </a>`);
+});
+
+/* reviews */
+const defaultReviews = [
+  { text: '子どもたちが自然な表情でいられるよう寄り添ってくださり、一生の宝物になる写真を撮っていただきました。何度見返しても幸せな気持ちになります。', name: 'S.M. 様（家族写真）' },
+  { text: '七五三の撮影をお願いしました。人見知りの子どもも、気づいたら笑顔になっていて驚きました。思い出の一枚をありがとうございました。', name: 'K.T. 様（七五三）' },
+  { text: 'お宮参りの大切な日を丁寧に記録してくださいました。写真を見るたびにあの日の空気を思い出せます。本当にお願いして良かったです。', name: 'Y.N. 様（お宮参り）' },
+];
+const reviews = (d.reviews && d.reviews.length) ? d.reviews : defaultReviews;
+const rGrid = document.getElementById('reviewsGrid');
+reviews.forEach(r => {
+  rGrid.insertAdjacentHTML('beforeend', `
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">${r.text}</p>
+      <p class="review-name">${r.name}</p>
+    </div>`);
+});
+
+/* FAQ */
+const defaultFaqs = [
+  { q: '撮影エリアはどこですか？', a: '関東全域へ出張いたします。公園・神社・ご自宅・海・山など、ご希望の場所へお伺いします。遠方の場合は別途交通費が発生することがあります。' },
+  { q: '雨天の場合はどうなりますか？', a: '天候が悪い場合は日程を変更いたします。当日の天気予報を確認した上で、撮影前日〜当日朝にご相談させてください。' },
+  { q: '納品はいつ頃になりますか？', a: '撮影後おおむね2〜4週間以内にデータをオンラインでお渡しします。七五三・お宮参りなどシーズンピーク時は多少お時間をいただく場合があります。' },
+  { q: '衣装はどうすればいいですか？', a: 'ご自由にご用意ください。七五三・お宮参りは和装・洋装どちらでも対応しています。お着替えが必要な場合は撮影場所の近くでご準備いただけると助かります。' },
+  { q: '兄弟・祖父母も一緒に撮れますか？', a: 'もちろん大丈夫です。人数に応じてプランやお時間をご相談させてください。大家族でのご撮影も歓迎しています。' },
+];
+const faqs = (d.faqs && d.faqs.length) ? d.faqs : defaultFaqs;
+const faqList = document.getElementById('faqList');
+faqs.forEach(f => {
+  const item = document.createElement('div');
+  item.className = 'faq-item';
+  item.innerHTML = `
+    <div class="faq-q">Q. ${f.q}<span class="faq-icon">+</span></div>
+    <div class="faq-a">A. ${f.a}</div>`;
+  item.querySelector('.faq-q').addEventListener('click', () => item.classList.toggle('open'));
+  faqList.appendChild(item);
+});
+
+/* hero slider — 4枚対応（PC：横並び / スマホ：opacity自動切替） */
+(function() {
+  var PH_SLIDES = [
+    'https://images.unsplash.com/photo-1511895426328-dc8714191011?w=800&h=1200&fit=crop',
+    'https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=800&h=1200&fit=crop',
+    'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=800&h=1200&fit=crop',
+    'https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=800&h=1200&fit=crop',
+  ];
+  var imgs = [
+    getImage('hero1', PH_SLIDES[0]),
+    getImage('hero2', PH_SLIDES[1]),
+    getImage('hero3', PH_SLIDES[2]),
+    getImage('hero4', PH_SLIDES[3]),
+  ].filter(Boolean);
+
+  var slider = document.getElementById('heroSlider');
+  if (!slider || !imgs.length) return;
+
+  imgs.forEach(function(src, i) {
+    var slide = document.createElement('div');
+    slide.className = 'hero-slide' + (i === 0 ? ' active' : '');
+    var img = document.createElement('img');
+    img.src = src;
+    img.alt = '撮影写真';
+    img.loading = i === 0 ? 'eager' : 'lazy';
+    slide.appendChild(img);
+    slider.appendChild(slide);
+  });
+
+  /* スマホのみ：opacity自動切替 */
+  var mobileIdx = 0;
+  var mobileTimer;
+
+  function isMobile() { return window.innerWidth <= 768; }
+
+  function nextMobile() {
+    var slides = slider.querySelectorAll('.hero-slide');
+    if (!slides.length) return;
+    slides[mobileIdx].classList.remove('active');
+    mobileIdx = (mobileIdx + 1) % slides.length;
+    slides[mobileIdx].classList.add('active');
+  }
+  function startMobile() { if (isMobile()) mobileTimer = setInterval(nextMobile, 3000); }
+  function stopMobile()  { clearInterval(mobileTimer); }
+
+  startMobile();
+  window.addEventListener('resize', function() { stopMobile(); startMobile(); }, { passive: true });
+  document.addEventListener('visibilitychange', function() {
+    document.hidden ? stopMobile() : (stopMobile(), startMobile());
+  });
+})();
+
+/* ヘッダー：ヒーロー上で透明化、スクロールで戻す */
+(function() {
+  var header = document.querySelector('header');
+  if (!header) return;
+  function updateHeader() {
+    var hero = document.getElementById('hero');
+    var threshold = hero ? hero.offsetHeight - 80 : window.innerHeight;
+    if (window.scrollY < threshold) {
+      header.classList.add('header-transparent');
+    } else {
+      header.classList.remove('header-transparent');
+    }
+  }
+  window.addEventListener('scroll', updateHeader, { passive: true });
+  updateHeader();
+})();
+
+/* ── フェードイン設定（管理画面連携） ── */
+(function() {
+  var fadeSettings = {};
+  try { fadeSettings = JSON.parse(localStorage.getItem('fadeSettings') || '{}'); } catch(e) {}
+
+  if (Object.keys(fadeSettings).length === 0) {
+    fadeSettings = { hero: true, profile: true, plan: true, gallery: true, voice: true, faq: true, contact: true };
+  }
+
+  var sectionMap = {
+    hero:    '#hero .hero-text-wrap',
+    profile: '#profile',
+    plan:    '#plan',
+    gallery: '#gallery-preview',
+    voice:   '#reviews',
+    faq:     '#faq',
+    contact: '#line-cta',
+  };
+
+  if (!('IntersectionObserver' in window)) return;
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  Object.keys(fadeSettings).forEach(function(key) {
+    if (fadeSettings[key]) {
+      var el = document.querySelector(sectionMap[key]);
+      if (el) {
+        el.classList.add('fade-section');
+        observer.observe(el);
+      }
+    }
+  });
+})();
+
+/* ── 画像位置・大きさ設定を適用（管理画面連携） ── */
+(function applyImageSettings() {
+  var saved = localStorage.getItem('imageSettings');
+  if (!saved) return;
+  var s;
+  try { s = JSON.parse(saved); } catch(e) { return; }
+
+  function applyToImg(selector, cfg) {
+    document.querySelectorAll(selector).forEach(function(img) {
+      img.style.objectPosition = cfg.x + '% ' + cfg.y + '%';
+      img.style.transform = 'scale(' + (cfg.s / 100) + ')';
+      img.style.transformOrigin = 'center center';
+    });
+  }
+
+  if (s.hero1)    applyToImg('.hero-slider .hero-slide:nth-child(1) img', s.hero1);
+  if (s.hero2)    applyToImg('.hero-slider .hero-slide:nth-child(2) img', s.hero2);
+  if (s.hero3)    applyToImg('.hero-slider .hero-slide:nth-child(3) img', s.hero3);
+  if (s.hero4)    applyToImg('.hero-slider .hero-slide:nth-child(4) img', s.hero4);
+  if (s.profile)  applyToImg('#profileImg', s.profile);
+  if (s.gallery1) applyToImg('#gpImg1', s.gallery1);
+  if (s.gallery2) applyToImg('#gpImg2', s.gallery2);
+  if (s.gallery3) applyToImg('#gpImg3', s.gallery3);
+  if (s.gallery4) applyToImg('#gpImg4', s.gallery4);
+})();
+
+} /* initPage() end */
+
+/* ── GASからデータ取得してページ初期化（失敗時はlocalStorageで起動） ── */
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzPeZ6yA_HMLv2Pqo2f1udSX6hRW9SFSxfoZC0_tzHK04i0k9XySxaGcN22wm_LN1c_/exec';
+
+/*
+  ★ GASスクリプトを以下に更新して再デプロイしてください：
+
+  const SHEET_ID = '1FJHptEz8vNzg9H0bV-AsOcvTIpuRE-J59NrJXLHZz1U';
+  const FOLDER_NAME = 'asu-photo-images';
+
+  function getOrCreateFolder() {
+    const folders = DriveApp.getFoldersByName(FOLDER_NAME);
+    if (folders.hasNext()) return folders.next();
+    return DriveApp.createFolder(FOLDER_NAME);
+  }
+
+  function doPost(e) {
+    try {
+      const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName('data');
+      let body = '{}';
+      if (e.parameter && e.parameter.data) {
+        body = e.parameter.data;
+      } else if (e.postData) {
+        body = e.postData.contents;
+      }
+      const parsed = JSON.parse(body);
+
+      // 画像Base64をDriveに保存してURLに変換
+      if (parsed.images) {
+        const folder = getOrCreateFolder();
+        Object.keys(parsed.images).forEach(key => {
+          const val = parsed.images[key];
+          if (val && val.startsWith('data:image')) {
+            try {
+              const mime = val.split(';')[0].split(':')[1];
+              const b64  = val.split(',')[1];
+              const blob = Utilities.newBlob(
+                Utilities.base64Decode(b64), mime, key + '.jpg');
+              const files = folder.getFilesByName(key + '.jpg');
+              while (files.hasNext()) { files.next().setTrashed(true); }
+              const file = folder.createFile(blob);
+              file.setSharing(DriveApp.Access.ANYONE_WITH_LINK,
+                              DriveApp.Permission.VIEW);
+              parsed.images[key] =
+                'https://drive.google.com/uc?export=view&id=' + file.getId();
+            } catch(imgErr) { console.log('画像保存エラー:', imgErr); }
+          }
+        });
+      }
+
+      sheet.getRange('A1').setValue(JSON.stringify(parsed));
+      return ContentService.createTextOutput(JSON.stringify({status:'ok'}))
+        .setMimeType(ContentService.MimeType.JSON);
+    } catch(err) {
+      return ContentService.createTextOutput(JSON.stringify({error:err.toString()}))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+  }
+
+  function doGet(e) {
+    try {
+      const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName('data');
+      const val  = sheet.getRange('A1').getValue();
+      const cb   = e.parameter.callback;
+      const json = val || '{}';
+      if (cb) {
+        return ContentService.createTextOutput(cb + '(' + json + ')')
+          .setMimeType(ContentService.MimeType.JAVASCRIPT);
+      }
+      return ContentService.createTextOutput(json)
+        .setMimeType(ContentService.MimeType.JSON);
+    } catch(err) {
+      return ContentService.createTextOutput('{}')
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+  }
+*/
+
+/* GASデータをlocalStorageに適用する共通処理 */
+function applyGASData(data) {
+  if (!data || typeof data !== 'object' || Object.keys(data).length === 0) return false;
+  let local = {};
+  try { local = JSON.parse(localStorage.getItem('asuphoto_data')) || {}; } catch(e) { local = {}; }
+
+  /* テキスト・設定データはGASを優先して上書き */
+  Object.assign(local, data);
+
+  /* 画像マージ：GASのDrive URL(https://)優先、ローカルBase64で補完 */
+  const gasImgs   = (data.images  && typeof data.images  === 'object') ? data.images  : {};
+  const localImgs = (local.images && typeof local.images === 'object') ? local.images : {};
+  const merged    = Object.assign({}, localImgs); // まずローカルを全コピー
+  Object.keys(gasImgs).forEach(function(k) {
+    const gv = gasImgs[k];
+    /* GASにDrive URL（https://）があれば必ず上書き */
+    if (gv && typeof gv === 'string' && gv.startsWith('https://')) {
+      merged[k] = gv;
+    }
+    /* GASにデータがなくローカルにもない場合は何もしない */
+  });
+  local.images = merged;
+
+  if (data.fadeSettings)  localStorage.setItem('fadeSettings',  JSON.stringify(data.fadeSettings));
+  if (data.imageSettings) localStorage.setItem('imageSettings', JSON.stringify(data.imageSettings));
+  localStorage.setItem('asuphoto_data', JSON.stringify(local));
+  console.log('[GAS] 適用完了 - キー:', Object.keys(data).join(', '));
+  return true;
+}
+
+/* GASからデータ取得：fetch優先 → JSONP fallback */
+async function loadFromGAS() {
+  /* ① fetchで試みる（GASはGETにCORSヘッダーを付与する） */
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 6000);
+    const res  = await fetch(GAS_URL + '?t=' + Date.now(),
+      { signal: controller.signal, cache: 'no-store' });
+    clearTimeout(timer);
+    const text = await res.text();
+    if (text && text !== '{}') {
+      const data = JSON.parse(text);
+      if (applyGASData(data)) {
+        console.log('[GAS] fetch取得完了');
+        return;
+      }
+    }
+  } catch(e) {
+    console.log('[GAS] fetch失敗、JSONPにフォールバック:', e.message);
+  }
+
+  /* ② JSONPで再試行 */
+  return new Promise((resolve) => {
+    const timeout = setTimeout(() => { console.log('[GAS] JSONPタイムアウト'); resolve(); }, 8000);
+    window._gasCallback = function(data) {
+      clearTimeout(timeout);
+      try { if (applyGASData(data)) console.log('[GAS] JSONP取得完了'); }
+      catch(e) { console.log('[GAS] 処理エラー:', e); }
+      resolve();
+    };
+    const script = document.createElement('script');
+    script.src = GAS_URL + '?callback=_gasCallback&t=' + Date.now();
+    script.onerror = () => { clearTimeout(timeout); console.log('[GAS] 読み込みエラー'); resolve(); };
+    document.head.appendChild(script);
+  });
+}
+
+(async function() {
+  await loadFromGAS();
+  initPage();
+})();
+</script>
+</body>
+</html>
